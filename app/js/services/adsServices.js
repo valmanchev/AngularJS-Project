@@ -20,11 +20,19 @@ app.factory('adsService',
 
 app.factory('townsService',
    function ($resource, baseServiceUrl) {
-      return {
-         // TODO: implement a service to get towns
-      };
+        var townsResource = $resource(
+            baseServiceUrl + '/api/towns'
+        );
+
+        return {
+            getTowns: function(success, error) {
+                return townsResource.query(success, error);
+            }
+        }
     }
 );
+
+
 
 app.factory('categoriesService',
    function ($resource, baseServiceUrl) {
