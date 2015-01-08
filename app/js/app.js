@@ -5,6 +5,16 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap.paginati
 app.constant('baseServiceUrl', 'http://softuni-ads.azurewebsites.net'); 
 app.constant('pageSize', 2);  
 
+app.run(function ($rootScope, $location, authService) {
+  $rootScope.$on('$locationChangeStart', function (event) {
+    if ($location.path().indexOf("/user/") != -1 && !authService.isLoggedIn()) {
+      // Authorization check: anonymous site visitors cannot access user routes
+      $location.path("/");
+    }
+  });
+});
+
+
 app.config(function ($routeProvider) {  
     
     $routeProvider.when('/', { 
